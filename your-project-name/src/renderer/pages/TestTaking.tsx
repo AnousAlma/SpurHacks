@@ -4,6 +4,7 @@ import React, {
   useCallback,
   MouseEvent,
   useEffect,
+  use,
 } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { dracula } from '@uiw/codemirror-theme-dracula';
@@ -15,6 +16,7 @@ import './split.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
+import { useWritingExam } from '../../contexts/WritingExamContext';
 
 const LANGS = ['javascript', 'python', 'cpp', 'java'] as const;
 const langSupport = { javascript: javascript(), python: python(), cpp: cpp(), java: java() };
@@ -44,6 +46,13 @@ export default function TestTaking() {
   const [aiInput, setAiInput] = useState('');
   const [aiMsg, setAiMsg] = useState<ChatLine[]>([]);
   const [aiLoading, setAiLoad] = useState(false);
+
+  const writingExam = useWritingExam();
+  useEffect(() => {
+    if (!writingExam) {
+      navigate('/', { replace: true });
+    }
+  }, [writingExam, navigate]);
 
   const TASKS = questions ? questions.map(q => (
     { id: q.id, title: q.title, text: q.description || 'No description provided.' }
