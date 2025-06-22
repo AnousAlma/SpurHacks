@@ -7,6 +7,10 @@ const Home = () => {
         // Add your navigation logic here
         navigate('/start'); // Example test ID, replace with actual logic
     };
+    const handleContinueTeacher = () => {
+        // Add your navigation logic here
+        navigate('/teacher'); // Example teacher page, replace with actual logic
+    };
 
     const styles = {
         container: {
@@ -152,6 +156,19 @@ const Home = () => {
                     }}
                 >
                     Begin Exam
+                </button>
+                <button
+                    style={styles.button}
+                    onClick={handleContinueTeacher}
+                    onMouseEnter={(e) => {
+                        e.target.style.transform = 'scale(1.05)';
+                        e.target.style.opacity = '1';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.transform = 'scale(1)';
+                        e.target.style.opacity = '0.9';
+                    }}>
+                    Create Exam
                 </button>
 
                 <p style={styles.footer}>SECURE • MONITORED • AI-ENHANCED</p>
