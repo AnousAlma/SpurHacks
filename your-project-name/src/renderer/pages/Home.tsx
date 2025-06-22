@@ -130,7 +130,7 @@ const Home = () => {
             <div style={styles.bgElement2}></div>
 
             <div style={styles.content}>
-                <h1 style={styles.title}>ExamIDE</h1>
+                <h1 style={styles.title}>ExamForge</h1>
 
                 <div style={styles.subtitle}>
                     <div style={styles.line}></div>
