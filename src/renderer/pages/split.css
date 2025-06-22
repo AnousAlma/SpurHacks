@@ -1,0 +1,14 @@
+.wrap       { display:flex; height:100vh; width:100%; overflow:hidden; }
+.pane       { overflow:hidden; }
+.tasks      { background:#1f1f1f; padding:1rem; overflow-y:auto; }
+.taskCard   { border:1px solid #555; border-radius:6px; padding:.8rem; margin-bottom:.8rem; }
+.taskCard h3{ margin:0 0 .25rem 0; font-weight:600; }
+.code       { display:flex; flex-direction:column; }
+.column     { position:relative; }
+.console    { background:#141414; color:#ddd; font-size:.85rem; padding:.6rem .8rem; overflow-y:auto; }
+.toolbar    { position:absolute; top:6px; right:10px; display:flex; gap:6px; z-index:10; }
+.toolbar select, .toolbar button { padding:2px 8px; font-size:.8rem; border-radius:6px; border:none; }
+.toolbar button { background:#4ade80; font-weight:600; cursor:pointer; }
+.gutter     { background:#444; z-index:5; }
+.gutter.vert  { width:6px; cursor:col-resize; }
+.gutter.horiz { height:6px; cursor:row-resize; }
