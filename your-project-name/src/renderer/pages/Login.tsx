@@ -7,11 +7,11 @@ import {
     setPersistence,
     browserLocalPersistence,
 } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { useAuth } from '../../contexts/AuthContext';
 
-export default function AuthPage() {
+export default function Login() {
     const nav = useNavigate();
 
     const { user, loading } = useAuth();
@@ -71,6 +71,7 @@ export default function AuthPage() {
 
             {msg && <p style={{ color: '#e66' }}>{msg}</p>}
             <button>Continue</button>
+            <p>No account? <Link to="/signup">Sign up</Link></p>
         </form>
     );
 }

@@ -31,9 +31,10 @@ export interface FocusPacket {
 }
 
 export interface ExamApi {
-  onFocusState:      (cb: (pkt: FocusPacket) => void) => void;
-  reportVisibility:  (visible: boolean) => void;
+  onFocusState: (cb: (pkt: FocusPacket) => void) => void;
+  reportVisibility: (visible: boolean) => void;
   runCode: (lang: string, src: string, idToken: string) => Promise<string>;
+  askAssistant: (question: string, context: string, idToken: string) => Promise<{ answer: string }>;
 }
 
 const api: ExamApi = {
@@ -45,10 +46,13 @@ const api: ExamApi = {
     ipcRenderer.send('page-visibility', { visible, ts: Date.now() });
   },
 
-  // just forward the token that arrives from the renderer
   runCode(lang, src, idToken) {
     return ipcRenderer.invoke('run-code', { lang, src, token: idToken });
   },
+
+  askAssistant: (question: string, context: string, idToken: string) =>
+    ipcRenderer.invoke('ai-ask', { question, context, idToken }),
+
 };
 
 contextBridge.exposeInMainWorld('examApi', api);

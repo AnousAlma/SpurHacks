@@ -23,6 +23,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { runViaBackend } from './runViaBackend';
+import { proxyAsk } from './proxyAsk';
 
 class AppUpdater {
   constructor() {
@@ -45,6 +46,17 @@ ipcMain.on('ipc-example', async (event, arg) => {
 // main.ts  (update the handler signature)
 ipcMain.handle('run-code', (_e, { lang, src, token }) =>
   runViaBackend(lang, src, token)
+);
+/* main.ts – IPC handler */
+ipcMain.handle('ai-ask', (_e, { question, context, idToken }) =>
+  fetch('http://127.0.0.1:5000/ask', {
+    method: 'POST',                                 
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${idToken}`,
+    },
+    body: JSON.stringify({ q: question, c: context }),
+  }).then(r => r.json())
 );
 
 
@@ -135,6 +147,9 @@ const createWindow = async () => {
   const ALLOW_HOSTS = new Set(['localhost']); // add more if needed
   ALLOW_HOSTS.add('identitytoolkit.googleapis.com'); 
   ALLOW_HOSTS.add('securetoken.googleapis.com');
+  ALLOW_HOSTS.add('evalulock.firebaseapp.com'); // your Firebase domain
+  ALLOW_HOSTS.add('evalulock.web.app'); // your Firebase domain
+  ALLOW_HOSTS.add('firestore.googleapis.com'); // Firestore API
 
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, cb) => {
     const url = new URL(details.url);
